@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsgsElevation", "UsgsElevation.csproj", "{EA1DB559-5542-4F6E-83C1-BD6F31A6E692}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsgsElevationTest", "UsgsElevationTest\UsgsElevationTest.csproj", "{78776E71-44DC-401C-AF5D-C3A1EEE6DA61}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{BA46DF82-B7AE-4BD4-98D0-36A5A8D94BFC}"
+	ProjectSection(SolutionItems) = preProject
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EA1DB559-5542-4F6E-83C1-BD6F31A6E692}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA1DB559-5542-4F6E-83C1-BD6F31A6E692}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA1DB559-5542-4F6E-83C1-BD6F31A6E692}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA1DB559-5542-4F6E-83C1-BD6F31A6E692}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78776E71-44DC-401C-AF5D-C3A1EEE6DA61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78776E71-44DC-401C-AF5D-C3A1EEE6DA61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78776E71-44DC-401C-AF5D-C3A1EEE6DA61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78776E71-44DC-401C-AF5D-C3A1EEE6DA61}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
