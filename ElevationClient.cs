@@ -1,45 +1,50 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
+using System.IO;
 using System.Net;
-using System.Runtime.Serialization;
-using System.Runtime.Serialization.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
 
-namespace Usgs.Elevation
+namespace Usgs.Ned
 {
 	/// <summary>
 	/// An object that represents the results of a query to the USGS Elevation service.
 	/// </summary>
-	[DataContract]
 	public class ElevationInfo
 	{
-		[DataMember(IsRequired = true)]
+		/// <summary>
+		/// Longitude
+		/// </summary>
 		public double x { get; set; }
 
-		[DataMember(IsRequired = true)]
+		/// <summary>
+		/// Latitude
+		/// </summary>
 		public double y { get; set; }
 
-		[DataMember(IsRequired = true)]
+		/// <summary>
+		/// The data source of the elevation data.
+		/// </summary>
 		public string Data_Source { get; set; }
 
-		[DataMember(IsRequired = true)]
+		/// <summary>
+		/// Elevation at the given longitude and latitude. The Z coordinate.
+		/// </summary>
 		public double Elevation { get; set; }
 
 		/// <summary>
-		/// Measurement unit of elevation: "Feet" or "Inches".
+		/// Measurement unit of <see cref="ElevationInfo.Elevation"/>: "Feet" or "Inches".
 		/// </summary>
-		[DataMember(IsRequired = true)]
 		public string Units { get; set; }
 	}
 
 	public class ElevationQueryResult
 	{
-		[DataMember(IsRequired = true)]
 		public ElevationInfo Elevation_Query { get; set; }
 	}
 
-	[DataContract]
 	public class ElevationQueryServiceResult
 	{
-		[DataMember(IsRequired = true)]
 		public ElevationQueryResult USGS_Elevation_Point_Query_Service { get; set; }
 	}
 
@@ -63,25 +68,22 @@ namespace Usgs.Elevation
 		/// <param name="y">Latitude (WGS84 Y coordinate)</param>
 		/// <param name="units">Desired elevation measurement unit</param>
 		/// <returns>Returns information about the location including the elevation.</returns>
-		public static ElevationInfo GetElevation(double x, double y, ElevationUnit units)
+		public async static Task<ElevationInfo> GetElevation(double x, double y, ElevationUnit units)
 		{
 			Uri uri = new Uri(string.Format("{0}?x={1}&y={2}&units={3}&output=json", _url, x, y, units));
 
 			ElevationQueryServiceResult output = null;
 
-			var request = HttpWebRequest.CreateDefault(uri);
-
-
-			using (var response = request.GetResponse() as HttpWebResponse)
-			using (var stream = response.GetResponseStream())
+			using (var client = new HttpClient())
+			using (var stream = await client.GetStreamAsync(uri))
+			using (var textReader = new StreamReader(stream))
+			using (var jsonReader = new JsonTextReader(textReader))
 			{
-				var serializer = new DataContractJsonSerializer(typeof(ElevationQueryServiceResult));
-				output = (ElevationQueryServiceResult)serializer.ReadObject(stream);
+				var serializer = JsonSerializer.Create();
+				output = serializer.Deserialize<ElevationQueryServiceResult>(jsonReader);
 			}
 
-
 			return output.USGS_Elevation_Point_Query_Service.Elevation_Query;
-
 		}
 	}
 }
